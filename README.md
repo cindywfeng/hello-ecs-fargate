@@ -1,5 +1,7 @@
 # DevOps Assessment Homework  
 
+![](ECS.png)
+
 ## Run the app
 
 In a virtualenv, run:
