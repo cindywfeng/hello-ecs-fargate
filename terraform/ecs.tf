@@ -64,7 +64,7 @@ resource "aws_security_group" "esc_cluster_sg" {
   }
 
   egress {
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.allowed_cidr_blocks
     from_port   = 0
     protocol    = "-1"
     to_port     = 0
