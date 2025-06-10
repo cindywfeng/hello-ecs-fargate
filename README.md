@@ -17,5 +17,5 @@ docker push 303981612052.dkr.ecr.eu-west-2.amazonaws.com/hello-app:latest
 
 # LB DNS
 ```
-hello-lb-388067368.eu-west-2.elb.amazonaws.com
+hello-lb-59498855.eu-west-2.elb.amazonaws.com
 ```
