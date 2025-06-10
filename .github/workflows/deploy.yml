@@ -1,13 +1,21 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   terraform-apply:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Download previous Terraform state
+      - name: Download Terraform state if it exists
         uses: actions/download-artifact@v3
+        continue-on-error: true
         with:
           name: terraform-state
           path: ./terraform
@@ -34,4 +42,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: terraform-state
-          path: ./terraform/terraform.tfstate
+          path: |
+            ./terraform/terraform.tfstate
+            ./terraform/terraform.tfstate.backup
