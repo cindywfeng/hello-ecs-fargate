@@ -1,13 +1,25 @@
+name: Terraform Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
 jobs:
-  terraform-apply:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  terraform:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Download previous Terraform state
+        if: github.event_name == 'push'
         uses: actions/download-artifact@v3
+        continue-on-error: true
         with:
           name: terraform-state
           path: ./terraform
@@ -26,12 +38,20 @@ jobs:
         run: terraform init
         working-directory: ./terraform
 
-      - name: Terraform Apply
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./terraform
+
+      - name: Terraform Apply (only on push to main)
+        if: github.event_name == 'push'
         run: terraform apply -auto-approve
         working-directory: ./terraform
 
-      - name: Upload Terraform state
+      - name: Upload Terraform state (only on push to main)
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v3
         with:
           name: terraform-state
-          path: ./terraform/terraform.tfstate
+          path: |
+            ./terraform/terraform.tfstate
+            ./terraform/terraform.tfstate.backup
