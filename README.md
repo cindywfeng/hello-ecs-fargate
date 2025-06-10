@@ -10,4 +10,4 @@ In a virtualenv, run:
 
 
 # Access the Application
-[Link](hello-lb-59498855.eu-west-2.elb.amazonaws.com)
+[Link](http://hello-lb-59498855.eu-west-2.elb.amazonaws.com/)
